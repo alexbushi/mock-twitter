@@ -1,5 +1,6 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import MenuList from "./components/MenuList";
+import MainList from "./components/MainList";
 
 function App() {
   return (
@@ -7,12 +8,10 @@ function App() {
       <GridItem w="100%">
         <MenuList />
       </GridItem>
-      <GridItem w="100%" bg="blue.500">
-        Main
+      <GridItem w="100%" borderX="1px" borderColor="gray.100">
+        <MainList />
       </GridItem>
-      <GridItem w="100%" bg="yellow.500">
-        Suggestions
-      </GridItem>
+      <GridItem w="100%">Suggestions</GridItem>
     </Grid>
   );
 }
