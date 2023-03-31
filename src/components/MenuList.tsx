@@ -34,6 +34,17 @@ const MenuList = () => {
           </Button>
         </ListItem>
       ))}
+      <Button
+        ml={3}
+        mt={3}
+        w="200px"
+        h="50px"
+        colorScheme="twitter"
+        borderRadius="20px"
+        fontSize={"lg"}
+      >
+        Tweet
+      </Button>
     </List>
   );
 };
