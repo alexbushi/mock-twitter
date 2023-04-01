@@ -1,5 +1,6 @@
 import { Heading, Spacer, Tab, TabList, Tabs } from "@chakra-ui/react";
 import CreateTweet from "./CreateTweet";
+import Tweet from "./Tweet";
 
 const MainList = () => {
   return (
@@ -15,6 +16,7 @@ const MainList = () => {
         </TabList>
       </Tabs>
       <CreateTweet />
+      <Tweet />
     </>
   );
 };

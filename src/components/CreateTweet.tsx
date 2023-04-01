@@ -24,7 +24,7 @@ const CreateTweet = () => {
   return (
     <Grid
       templateRows="repeat(2, 1fr)"
-      templateColumns="repeat(6, 1fr)"
+      templateColumns="repeat(7, 1fr)"
       gap={1}
       borderBottom="1px"
       borderColor="gray.100"
@@ -32,7 +32,7 @@ const CreateTweet = () => {
       <GridItem rowSpan={2} colSpan={1} justifySelf="center" pt={2}>
         <Avatar />
       </GridItem>
-      <GridItem colSpan={5} h="50px" p={2}>
+      <GridItem colSpan={6} h="50px" p={2}>
         <Input
           ref={ref}
           placeholder="What's happening?"
@@ -40,7 +40,7 @@ const CreateTweet = () => {
           fontSize="20px"
         />
       </GridItem>
-      <GridItem colSpan={5} pr={3}>
+      <GridItem colSpan={6} pr={3}>
         <HStack>
           <ButtonGroup spacing={0} size="md" variant="ghost" color="#4299E1">
             <IconButton icon={<AiOutlinePicture />} aria-label="Image 1" />
