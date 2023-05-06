@@ -6,7 +6,7 @@ import {
   GridItem,
   HStack,
   IconButton,
-  Input,
+  Textarea,
   Spacer,
 } from "@chakra-ui/react";
 import {
@@ -16,10 +16,10 @@ import {
 } from "react-icons/ai";
 import { BsListTask, BsEmojiSmile } from "react-icons/bs";
 import { BiMap } from "react-icons/bi";
-import { useRef } from "react";
+import { useState } from "react";
 
 const CreateTweet = () => {
-  const ref = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState("");
 
   return (
     <Grid
@@ -33,11 +33,12 @@ const CreateTweet = () => {
         <Avatar />
       </GridItem>
       <GridItem colSpan={6} h="50px" p={2}>
-        <Input
-          ref={ref}
+        <Textarea
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           placeholder="What's happening?"
           variant="unstyled"
-          fontSize="20px"
+          resize="none"
         />
       </GridItem>
       <GridItem colSpan={6} pr={3}>
