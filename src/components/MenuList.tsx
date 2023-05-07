@@ -19,8 +19,6 @@ const MenuList = () => {
 
   const [user] = useAuthState(auth);
 
-  console.log(user);
-
   return (
     <List>
       <Link to="/home">

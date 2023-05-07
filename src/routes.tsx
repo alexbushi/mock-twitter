@@ -5,11 +5,13 @@ import PrivateRoutes from "./components/PrivateRoutes";
 import RegistrationPage from "./pages/RegistrationPage";
 import ProfilePage from "./pages/ProfilePage";
 import MainList from "./components/MainList";
+import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <PrivateRoutes />,

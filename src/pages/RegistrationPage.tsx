@@ -6,6 +6,7 @@ import {
   Input,
   Button,
   Stack,
+  Spinner,
 } from "@chakra-ui/react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, registerWithEmailAndPassword } from "../firebase";
@@ -24,12 +25,13 @@ const RegistrationPage = () => {
   };
 
   useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
-    }
     if (user) navigate("/home");
   }, [user, loading, navigate]);
+
+  if (loading) {
+    console.log("here");
+    return <Spinner />;
+  }
 
   return (
     <Box maxW="md" mx="auto" mt="8">

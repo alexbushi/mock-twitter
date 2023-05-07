@@ -7,6 +7,7 @@ import {
   Button,
   Stack,
   Text,
+  Spinner,
 } from "@chakra-ui/react";
 import { logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
 import { auth } from "../firebase";
@@ -20,12 +21,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
-    }
     if (user) navigate("/home");
   }, [user, loading, navigate]);
+
+  if (loading) return <Spinner />;
 
   return (
     <Box maxW="md" mx="auto" mt="8">
@@ -63,9 +62,12 @@ const Login = () => {
           >
             Login with Google
           </Button>
-          <Button colorScheme="gray" type="submit">
-            <Link to="/registration">Create an account</Link>
-          </Button>
+
+          <Link to="/registration">
+            <Button colorScheme="gray" type="submit" width="100%">
+              Create an account
+            </Button>
+          </Link>
         </Stack>
       </form>
     </Box>
