@@ -6,6 +6,7 @@ import { GrNotification } from "react-icons/gr";
 import { HiOutlineMail } from "react-icons/hi";
 import { CgMoreO } from "react-icons/cg";
 import { ReactElement } from "react";
+import { Link } from "react-router-dom";
 
 const MenuList = () => {
   const iconMap: { [key: string]: ReactElement } = {
@@ -29,7 +30,7 @@ const MenuList = () => {
             size="lg"
             borderRadius="25px"
           >
-            {key}
+            {key === "Profile" ? <Link to="/profile">Profile</Link> : key}
           </Button>
         </ListItem>
       ))}
