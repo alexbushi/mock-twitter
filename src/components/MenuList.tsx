@@ -22,9 +22,8 @@ const MenuList = () => {
   return (
     <List>
       {Object.keys(iconMap).map((key) => (
-        <ListItem>
+        <ListItem key={key}>
           <Button
-            key={key}
             leftIcon={iconMap[key]}
             variant="ghost"
             size="lg"

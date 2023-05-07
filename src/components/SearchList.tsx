@@ -13,8 +13,9 @@ const SearchList = () => {
         <Heading fontSize={"xl"} p={5}>
           What's happening
         </Heading>
-        {currentEvents.map((currentEvent) => (
+        {currentEvents.map((currentEvent, index) => (
           <CurrentEvent
+            key={index}
             category={currentEvent.category}
             subject={currentEvent.subject}
             num_of_tweets={currentEvent.num_of_tweets}
@@ -25,8 +26,12 @@ const SearchList = () => {
         <Heading fontSize={"xl"} p={5}>
           Who to follow
         </Heading>
-        {profiles.map((profile) => (
-          <FollowSuggestion name={profile.name} handle={profile.handle} />
+        {profiles.map((profile, index) => (
+          <FollowSuggestion
+            key={index}
+            name={profile.name}
+            handle={profile.handle}
+          />
         ))}
       </Box>
     </>

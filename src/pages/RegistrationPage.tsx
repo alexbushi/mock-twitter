@@ -6,18 +6,22 @@ import {
   Input,
   Button,
   Stack,
-  Text,
 } from "@chakra-ui/react";
-import { logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
-import { auth } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { auth, registerWithEmailAndPassword } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [email, setUsername] = useState("");
+const RegistrationPage = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
+
+  const register = () => {
+    if (!name) alert("Please enter name");
+    registerWithEmailAndPassword(name, email, password);
+  };
 
   useEffect(() => {
     if (loading) {
@@ -32,16 +36,25 @@ const Login = () => {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          logInWithEmailAndPassword(email, password);
+          register();
         }}
       >
         <Stack spacing="4">
+          <FormControl isRequired>
+            <FormLabel>Full Name</FormLabel>
+            <Input
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+            />
+          </FormControl>
+
           <FormControl isRequired>
             <FormLabel>Email</FormLabel>
             <Input
               type="text"
               value={email}
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
             />
           </FormControl>
           <FormControl isRequired>
@@ -53,18 +66,7 @@ const Login = () => {
             />
           </FormControl>
           <Button colorScheme="twitter" type="submit">
-            Login
-          </Button>
-          <Text align="center">OR</Text>
-          <Button
-            colorScheme="gray"
-            type="submit"
-            onClick={() => signInWithGoogle()}
-          >
-            Login with Google
-          </Button>
-          <Button colorScheme="gray" type="submit">
-            <Link to="/registration">Create an account</Link>
+            Register
           </Button>
         </Stack>
       </form>
@@ -72,4 +74,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default RegistrationPage;
