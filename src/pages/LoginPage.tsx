@@ -68,6 +68,17 @@ const Login = () => {
               Create an account
             </Button>
           </Link>
+
+          <Link to="/reset">
+            <Button
+              colorScheme="gray"
+              type="submit"
+              width="100%"
+              variant="ghost"
+            >
+              Forgot password?
+            </Button>
+          </Link>
         </Stack>
       </form>
     </Box>
