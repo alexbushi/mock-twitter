@@ -4,16 +4,23 @@ import LoginPage from "./pages/LoginPage";
 import PrivateRoutes from "./components/PrivateRoutes";
 import RegistrationPage from "./pages/RegistrationPage";
 import ProfilePage from "./pages/ProfilePage";
+import MainList from "./components/MainList";
 
 const router = createBrowserRouter([
-  { path: "/", element: <App /> },
   {
-    element: <PrivateRoutes />,
+    path: "/",
+    element: <App />,
     children: [
-      { path: "home", element: <App /> },
-      { path: "profile", element: <ProfilePage /> },
+      {
+        element: <PrivateRoutes />,
+        children: [
+          { path: "home", element: <MainList /> },
+          { path: "profile/:displayName", element: <ProfilePage /> },
+        ],
+      },
     ],
   },
+
   { path: "/login", element: <LoginPage /> },
   { path: "/registration", element: <RegistrationPage /> },
 ]);

@@ -2,6 +2,7 @@ import { Grid, GridItem } from "@chakra-ui/react";
 import MenuList from "./components/MenuList";
 import MainList from "./components/MainList";
 import SearchList from "./components/SearchList";
+import { Outlet } from "react-router-dom";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
         <MenuList />
       </GridItem>
       <GridItem w="100%" borderX="1px" borderColor="gray.100">
-        <MainList />
+        <Outlet />
       </GridItem>
       <GridItem w="100%" paddingX={20}>
         <SearchList />
