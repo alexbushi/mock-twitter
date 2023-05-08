@@ -8,7 +8,6 @@ import { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import { getAllTweets, addTweet } from "../services/addTweet";
 
 const MenuList = () => {
   const iconMap: { [key: string]: ReactElement } = {
@@ -76,8 +75,6 @@ const MenuList = () => {
         colorScheme="twitter"
         borderRadius="20px"
         fontSize={"lg"}
-        onClick={() => getAllTweets()}
-        // onClick={() => addTweet("hello there")}
       >
         Tweet
       </Button>

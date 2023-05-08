@@ -13,8 +13,9 @@ import {
 import { BiExport } from "react-icons/bi";
 import { FaRegComment, FaRetweet, FaRegHeart } from "react-icons/fa";
 import { IoIosStats } from "react-icons/io";
+import { Tweet } from "../services/addTweet";
 
-const Tweet = () => {
+const TweetCard = ({ content, username }: Tweet) => {
   return (
     <Grid
       templateColumns="repeat(7, 1fr)"
@@ -29,7 +30,7 @@ const Tweet = () => {
       <GridItem colSpan={6} p={2}>
         <HStack>
           <Box fontWeight="semibold" as="h5" lineHeight="tight" noOfLines={1}>
-            President Biden
+            {username}
           </Box>
           <Box
             color="gray.500"
@@ -37,22 +38,14 @@ const Tweet = () => {
             letterSpacing="wide"
             fontSize="xs"
           >
-            @POTUS · 2h
+            @{username} · 2h
           </Box>
           <Spacer />
           <Button variant="ghost" pb={2}>
             ...
           </Button>
         </HStack>
-        <Box pr={3}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </Box>
+        <Box pr={3}>{content}</Box>
         <HStack align="center">
           <ButtonGroup size="md" variant="ghost" alignItems="center">
             <IconButton icon={<FaRegComment />} aria-label="Image 1" mr={-2} />
@@ -79,4 +72,4 @@ const Tweet = () => {
   );
 };
 
-export default Tweet;
+export default TweetCard;

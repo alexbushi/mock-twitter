@@ -28,10 +28,7 @@ const RegistrationPage = () => {
     if (user) navigate("/home");
   }, [user, loading, navigate]);
 
-  if (loading) {
-    console.log("here");
-    return <Spinner />;
-  }
+  if (loading) return <Spinner />;
 
   return (
     <Box maxW="md" mx="auto" mt="8">

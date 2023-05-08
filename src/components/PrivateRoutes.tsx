@@ -5,7 +5,6 @@ import { Navigate, Outlet } from "react-router-dom";
 const PrivateRoutes = () => {
   // eslint-disable-next-line
   const [user, loading, error] = useAuthState(auth);
-  console.log(user);
   if (!user && !loading) return <Navigate to="/login" />;
 
   return <Outlet />;

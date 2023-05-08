@@ -17,6 +17,7 @@ import {
 import { BsListTask, BsEmojiSmile } from "react-icons/bs";
 import { BiMap } from "react-icons/bi";
 import { useState } from "react";
+import { addTweet } from "../services/addTweet";
 
 const CreateTweet = () => {
   const [value, setValue] = useState("");
@@ -52,7 +53,12 @@ const CreateTweet = () => {
             <IconButton icon={<BiMap />} aria-label="Image 1" />
           </ButtonGroup>
           <Spacer />
-          <Button colorScheme="twitter" size="sm" borderRadius="full">
+          <Button
+            colorScheme="twitter"
+            size="sm"
+            borderRadius="full"
+            onClick={() => addTweet(value)}
+          >
             Tweet
           </Button>
         </HStack>

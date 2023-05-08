@@ -1,8 +1,13 @@
-import { Heading, Spacer, Tab, TabList, Tabs } from "@chakra-ui/react";
+import { Heading, Spacer, Spinner, Tab, TabList, Tabs } from "@chakra-ui/react";
 import CreateTweet from "./CreateTweet";
-import Tweet from "./Tweet";
+import TweetCard from "./TweetCard";
+import { Tweet, useGetAllTweets } from "../services/addTweet";
 
 const MainList = () => {
+  const { isLoading, tweets } = useGetAllTweets();
+
+  if (isLoading) return <Spinner />;
+
   return (
     <>
       <Heading fontSize={"xl"} marginY={7} marginLeft={5}>
@@ -16,7 +21,17 @@ const MainList = () => {
         </TabList>
       </Tabs>
       <CreateTweet />
-      <Tweet />
+      {tweets.map((tweet: Tweet) => (
+        <TweetCard
+          key={tweet.id}
+          id={tweet.id}
+          user_id={tweet.user_id}
+          content={tweet.content}
+          username={tweet.username}
+          likes_count={tweet.likes_count}
+          created_at={tweet.created_at}
+        />
+      ))}
     </>
   );
 };

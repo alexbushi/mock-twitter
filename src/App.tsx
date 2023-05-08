@@ -1,6 +1,5 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import MenuList from "./components/MenuList";
-import MainList from "./components/MainList";
 import SearchList from "./components/SearchList";
 import { Outlet } from "react-router-dom";
 
