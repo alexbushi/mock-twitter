@@ -1,15 +1,19 @@
 import {
   collection,
   addDoc,
-  getDocs,
   serverTimestamp,
+  QuerySnapshot,
+  onSnapshot,
+  CollectionReference,
+  orderBy,
+  query,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 export interface Tweet {
-  id: string;
+  id?: string;
   user_id: string;
   username: string;
   content: string;
@@ -17,7 +21,7 @@ export interface Tweet {
   likes_count: number;
 }
 
-const TWEETS_REF = collection(db, "tweets");
+const TWEETS_REF = collection(db, "tweets") as CollectionReference<Tweet>;
 
 export const addTweet = async (content: string) => {
   const auth = getAuth();
@@ -25,7 +29,7 @@ export const addTweet = async (content: string) => {
 
   if (user !== null) {
     const userID = user.uid;
-    const username = user.displayName;
+    const username = user.displayName || "";
 
     await addDoc(TWEETS_REF, {
       user_id: userID,
@@ -44,31 +48,33 @@ export const useGetAllTweets = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    const fetchData = async () => {
-      const querySnapshot = await getDocs(TWEETS_REF);
-      const tweetsList: Tweet[] = [];
+    const unsubscribe = onSnapshot(
+      query(TWEETS_REF, orderBy("created_at", "desc")),
+      (querySnapshot: QuerySnapshot<Tweet>) => {
+        const tweetsList: Tweet[] = [];
 
-      querySnapshot.forEach((tweet) => {
-        // console.log(tweet.id, " => ", tweet.data());
-        const { id } = tweet;
-        const tweetData = tweet.data();
-        const tweetObj = {
-          id,
-          user_id: tweetData.user_id,
-          username: tweetData.username,
-          content: tweetData.content,
-          created_at: tweetData.created_at,
-          likes_count: tweetData.likes_count,
-        };
+        querySnapshot.forEach((tweet) => {
+          const { id } = tweet;
+          const tweetData = tweet.data();
+          const tweetObj = {
+            id,
+            user_id: tweetData.user_id,
+            username: tweetData.username,
+            content: tweetData.content,
+            created_at: tweetData.created_at,
+            likes_count: tweetData.likes_count,
+          };
 
-        tweetsList.push(tweetObj);
-      });
+          tweetsList.push(tweetObj);
+        });
 
-      setTweets(tweetsList);
-      setIsLoading(false);
-    };
+        setTweets(tweetsList);
+        setIsLoading(false);
+      }
+    );
 
-    fetchData();
+    // unsubscribe from the real-time listener when the component unmounts
+    return () => unsubscribe();
   }, []);
 
   return { isLoading, tweets };

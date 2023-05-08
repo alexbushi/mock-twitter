@@ -57,7 +57,11 @@ const CreateTweet = () => {
             colorScheme="twitter"
             size="sm"
             borderRadius="full"
-            onClick={() => addTweet(value)}
+            isDisabled={!value}
+            onClick={() => {
+              addTweet(value);
+              setValue("");
+            }}
           >
             Tweet
           </Button>
