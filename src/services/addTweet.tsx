@@ -85,19 +85,23 @@ export const useGetUserData = () => {
   return { isLoading, userData };
 };
 
-export const useGetAllTweets = () => {
+const useGetTweets = (includeFollowingTweets: boolean) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [tweets, setTweets] = useState<Tweet[]>([]);
   const { userData } = useGetUserData();
 
   useEffect(() => {
-    setIsLoading(true);
+    if (userData?.uid) {
+      setIsLoading(true);
 
-    if (userData?.following && userData?.uid) {
+      const userIds = includeFollowingTweets
+        ? [userData.uid, ...userData.following]
+        : [userData.uid];
+
       const unsubscribe = onSnapshot(
         query(
           TWEETS_REF,
-          where("user_id", "in", [...userData.following, userData.uid]),
+          where("user_id", "in", userIds),
           orderBy("created_at", "desc")
         ),
         (querySnapshot: QuerySnapshot<Tweet>) => {
@@ -125,7 +129,15 @@ export const useGetAllTweets = () => {
       // Unsubscribe from the real-time listener when the component unmounts
       return () => unsubscribe();
     }
-  }, [userData]);
+  }, [userData, includeFollowingTweets]);
 
   return { isLoading, tweets };
+};
+
+export const useGetAllTweets = () => {
+  return useGetTweets(true);
+};
+
+export const useGetUserTweets = () => {
+  return useGetTweets(false);
 };
