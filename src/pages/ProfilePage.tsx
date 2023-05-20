@@ -1,4 +1,4 @@
-import { Box, Button, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Spinner, Stack, Text } from "@chakra-ui/react";
 import { auth, logout } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Tweet, useGetUserTweets } from "../services/addTweet";
@@ -19,17 +19,21 @@ const ProfilePage = () => {
           </Button>
         </Stack>
       </Box>
-      {tweets.map((tweet: Tweet) => (
-        <TweetCard
-          key={tweet.id}
-          id={tweet.id}
-          user_id={tweet.user_id}
-          content={tweet.content}
-          username={tweet.username}
-          likes_count={tweet.likes_count}
-          created_at={tweet.created_at}
-        />
-      ))}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        tweets.map((tweet: Tweet) => (
+          <TweetCard
+            key={tweet.id}
+            id={tweet.id}
+            user_id={tweet.user_id}
+            content={tweet.content}
+            username={tweet.username}
+            likes_count={tweet.likes_count}
+            created_at={tweet.created_at}
+          />
+        ))
+      )}
     </>
   );
 };

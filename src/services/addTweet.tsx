@@ -9,6 +9,9 @@ import {
   query,
   where,
   getDocs,
+  updateDoc,
+  doc,
+  arrayUnion,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
@@ -52,6 +55,30 @@ export const addTweet = async (content: string) => {
       likes_count: 0,
     });
   }
+};
+
+export const addFollowerFollowing = async (newFollowingId: string) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if (!user) return;
+
+  const usersRef = collection(db, "users");
+  const newFollowingQuery = query(usersRef, where("uid", "==", user.uid));
+  const newFollowingSnapshot = await getDocs(newFollowingQuery);
+
+  if (newFollowingSnapshot.empty) return;
+
+  const newFollowerQuery = query(usersRef, where("uid", "==", newFollowingId));
+  const newFollowerSnapshot = await getDocs(newFollowerQuery);
+
+  if (newFollowerSnapshot.empty) return;
+
+  const userRef = doc(usersRef, newFollowingSnapshot.docs[0].id);
+  await updateDoc(userRef, { following: arrayUnion(newFollowingId) });
+
+  const newFollowerRef = doc(usersRef, newFollowerSnapshot.docs[0].id);
+  await updateDoc(newFollowerRef, { followers: arrayUnion(user.uid) });
 };
 
 export const useGetUserData = () => {
