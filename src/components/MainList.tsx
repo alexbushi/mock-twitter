@@ -28,7 +28,7 @@ const MainList = () => {
           user_id={tweet.user_id}
           content={tweet.content}
           username={tweet.username}
-          likes_count={tweet.likes_count}
+          likes={tweet.likes}
           created_at={tweet.created_at}
         />
       ))}

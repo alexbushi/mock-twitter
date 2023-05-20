@@ -25,7 +25,7 @@ export interface Tweet {
   username: string;
   content: string;
   created_at: { seconds: number; nanoseconds: number };
-  likes_count: number;
+  likes: string[];
 }
 
 interface User {
@@ -52,9 +52,19 @@ export const addTweet = async (content: string) => {
       username: username,
       content,
       created_at: serverTimestamp(),
-      likes_count: 0,
+      likes: [],
     });
   }
+};
+
+export const addLike = async (tweetId: string) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if (!user) return;
+
+  const tweetRef = doc(TWEETS_REF, tweetId);
+  await updateDoc(tweetRef, { likes: arrayUnion(user.uid) });
 };
 
 export const addFollowerFollowing = async (newFollowingId: string) => {
@@ -142,7 +152,7 @@ const useGetTweets = (includeFollowingTweets: boolean) => {
               username: tweetData.username,
               content: tweetData.content,
               created_at: tweetData.created_at,
-              likes_count: tweetData.likes_count,
+              likes: tweetData.likes,
             };
 
             tweetsList.push(tweetObj);

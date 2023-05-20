@@ -13,9 +13,13 @@ import {
 import { BiExport } from "react-icons/bi";
 import { FaRegComment, FaRetweet, FaRegHeart } from "react-icons/fa";
 import { IoIosStats } from "react-icons/io";
-import { Tweet } from "../services/addTweet";
+import { Tweet, addLike } from "../services/addTweet";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
 
-const TweetCard = ({ content, username }: Tweet) => {
+const TweetCard = ({ id, content, username, likes }: Tweet) => {
+  const [user] = useAuthState(auth);
+
   return (
     <Grid
       templateColumns="repeat(7, 1fr)"
@@ -50,19 +54,25 @@ const TweetCard = ({ content, username }: Tweet) => {
           <ButtonGroup size="md" variant="ghost" alignItems="center">
             <IconButton icon={<FaRegComment />} aria-label="Image 1" mr={-2} />
             <Text fontSize="14px" mr={3}>
-              120
+              0
             </Text>
             <IconButton icon={<FaRetweet />} aria-label="Image 1" mr={-2} />
             <Text fontSize="14px" mr={3}>
-              120
+              0
             </Text>
-            <IconButton icon={<FaRegHeart />} aria-label="Image 1" mr={-2} />
+            <IconButton
+              icon={<FaRegHeart />}
+              aria-label="Image 1"
+              mr={-2}
+              onClick={() => addLike(id!)}
+              color={user && likes.includes(user.uid) ? "pink.400" : "black"}
+            />
             <Text fontSize="14px" mr={3}>
-              120
+              {likes.length}
             </Text>
             <IconButton icon={<IoIosStats />} aria-label="Image 1" mr={-2} />
             <Text fontSize="14px" mr={5}>
-              120
+              0
             </Text>
             <IconButton icon={<BiExport />} aria-label="Image 1" />
           </ButtonGroup>
