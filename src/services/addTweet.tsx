@@ -23,6 +23,7 @@ export interface Tweet {
   id?: string;
   user_id: string;
   username: string;
+  name: string;
   content: string;
   created_at: { seconds: number; nanoseconds: number };
   likes: string[];
@@ -50,11 +51,12 @@ export const addTweet = async (content: string) => {
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
-      const username = querySnapshot.docs[0]?.data().username;
+      const { name, username } = querySnapshot.docs[0]?.data();
 
       await addDoc(TWEETS_REF, {
         user_id: user.uid,
         username: username,
+        name: name,
         content,
         created_at: serverTimestamp(),
         likes: [],
@@ -103,6 +105,7 @@ export const useGetUserData = () => {
   const [user] = useAuthState(auth);
 
   useEffect(() => {
+    console.log("here in getuserdata");
     const getUserData = async () => {
       if (user) {
         setIsLoading(true);
@@ -158,6 +161,7 @@ const useGetTweets = (includeFollowingTweets: boolean) => {
               id: tweet.id,
               user_id: tweetData.user_id,
               username: tweetData.username,
+              name: tweetData.name,
               content: tweetData.content,
               created_at: tweetData.created_at,
               likes: tweetData.likes,

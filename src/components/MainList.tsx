@@ -28,6 +28,7 @@ const MainList = () => {
           user_id={tweet.user_id}
           content={tweet.content}
           username={tweet.username}
+          name={tweet.name}
           likes={tweet.likes}
           created_at={tweet.created_at}
         />

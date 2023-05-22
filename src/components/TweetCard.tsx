@@ -17,7 +17,7 @@ import { Tweet, addLike } from "../services/addTweet";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 
-const TweetCard = ({ id, content, username, likes }: Tweet) => {
+const TweetCard = ({ id, content, name, username, likes }: Tweet) => {
   const [user] = useAuthState(auth);
 
   return (
@@ -34,7 +34,7 @@ const TweetCard = ({ id, content, username, likes }: Tweet) => {
       <GridItem colSpan={6} p={2}>
         <HStack>
           <Box fontWeight="semibold" as="h5" lineHeight="tight" noOfLines={1}>
-            {username}
+            {name}
           </Box>
           <Box
             color="gray.500"
