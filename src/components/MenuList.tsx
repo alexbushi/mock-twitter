@@ -1,4 +1,4 @@
-import { Button, List, ListItem } from "@chakra-ui/react";
+import { Button, List, ListItem, Spinner } from "@chakra-ui/react";
 import { FaHome, FaHashtag } from "react-icons/fa";
 import { BsPerson, BsTwitter } from "react-icons/bs";
 import { BiBookmark } from "react-icons/bi";
@@ -6,8 +6,7 @@ import { GrNotification } from "react-icons/gr";
 import { HiOutlineMail } from "react-icons/hi";
 import { ReactElement } from "react";
 import { Link } from "react-router-dom";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
+import { useGetUserData } from "../services/addTweet";
 
 const MenuList = () => {
   const iconMap: { [key: string]: ReactElement } = {
@@ -17,7 +16,9 @@ const MenuList = () => {
     Bookmarks: <BiBookmark size={23} />,
   };
 
-  const [user] = useAuthState(auth);
+  const { isLoading, userData } = useGetUserData();
+
+  if (isLoading) return <Spinner />;
 
   return (
     <List>
@@ -55,7 +56,7 @@ const MenuList = () => {
           </Button>
         </ListItem>
       ))}
-      <Link to={`/profile/${user?.displayName}`}>
+      <Link to={`/profile/${userData?.username}`}>
         <ListItem>
           <Button
             leftIcon={<BsPerson size={30} />}
@@ -63,7 +64,7 @@ const MenuList = () => {
             size="lg"
             borderRadius="25px"
           >
-            Profile
+            {userData?.username}
           </Button>
         </ListItem>
       </Link>

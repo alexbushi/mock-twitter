@@ -31,6 +31,7 @@ export interface Tweet {
 interface User {
   uid: string;
   name: string;
+  username: string;
   authProvider: string;
   email: string;
   followers: string[];
@@ -43,17 +44,22 @@ export const addTweet = async (content: string) => {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  if (user !== null) {
-    const userID = user.uid;
-    const username = user.displayName || "";
+  if (user) {
+    const q = query(collection(db, "users"), where("uid", "==", user.uid));
 
-    await addDoc(TWEETS_REF, {
-      user_id: userID,
-      username: username,
-      content,
-      created_at: serverTimestamp(),
-      likes: [],
-    });
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const username = querySnapshot.docs[0]?.data().username;
+
+      await addDoc(TWEETS_REF, {
+        user_id: user.uid,
+        username: username,
+        content,
+        created_at: serverTimestamp(),
+        likes: [],
+      });
+    }
   }
 };
 
@@ -98,22 +104,24 @@ export const useGetUserData = () => {
 
   useEffect(() => {
     const getUserData = async () => {
-      setIsLoading(true);
-
       if (user) {
+        setIsLoading(true);
         try {
           const q = query(
             collection(db, "users"),
-            where("uid", "==", user.uid)
+            where("uid", "in", [user.uid])
           );
 
           const querySnapshot = await getDocs(q);
-          setUserData(querySnapshot.docs[0]?.data() as User);
+
+          if (!querySnapshot.empty) {
+            setUserData(querySnapshot.docs[0]?.data() as User);
+          }
         } catch (error) {
           console.log(error);
         }
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     getUserData();

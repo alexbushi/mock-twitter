@@ -39,9 +39,11 @@ const signInWithGoogle = async () => {
     const q = query(collection(db, "users"), where("uid", "==", user.uid));
     const docs = await getDocs(q);
     if (docs.docs.length === 0) {
+      const username = user.displayName + user.uid.slice(0,6)
       await addDoc(collection(db, "users"), {
         uid: user.uid,
         name: user.displayName,
+        username: username,
         authProvider: "google",
         email: user.email,
         followers: [],
@@ -67,10 +69,12 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
+    const username = user.displayName + user.uid.slice(0,6)
     await addDoc(collection(db, "users"), {
       // TODO: consolidate this logic into one function
       uid: user.uid,
       name: user.displayName,
+      username: username,
       authProvider: "local",
       email,
       followers: [],

@@ -18,7 +18,7 @@ const router = createBrowserRouter([
         element: <PrivateRoutes />,
         children: [
           { path: "home", element: <MainList /> },
-          { path: "profile/:displayName", element: <ProfilePage /> },
+          { path: "profile/:username", element: <ProfilePage /> },
         ],
       },
     ],

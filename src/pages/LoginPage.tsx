@@ -15,7 +15,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const Login = () => {
             <Input
               type="text"
               value={email}
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
             />
           </FormControl>
           <FormControl isRequired>
