@@ -105,7 +105,6 @@ export const useGetUserData = () => {
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    console.log("here in getuserdata");
     const getUserData = async () => {
       if (user) {
         setIsLoading(true);

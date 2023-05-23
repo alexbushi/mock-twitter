@@ -1,11 +1,11 @@
 import { Box, Button, Heading, Spinner, Stack, Text } from "@chakra-ui/react";
-import { auth, logout } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { logout } from "../firebase";
 import { Tweet, useGetUserTweets } from "../services/addTweet";
 import TweetCard from "../components/TweetCard";
+import { useParams } from "react-router-dom";
 
 const ProfilePage = () => {
-  const [user] = useAuthState(auth);
+  const { username } = useParams();
   const { isLoading, tweets } = useGetUserTweets();
 
   return (
@@ -13,7 +13,7 @@ const ProfilePage = () => {
       <Box maxW="md" mx="auto" my="7">
         <Stack spacing={4}>
           <Heading fontSize={"xl"}>Profile</Heading>
-          <Text>{user?.displayName}</Text>
+          <Text>@{username}</Text>
           <Button size="sm" w="90px" onClick={() => logout()}>
             Logout
           </Button>

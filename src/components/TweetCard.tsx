@@ -9,6 +9,7 @@ import {
   IconButton,
   Spacer,
   Text,
+  textDecoration,
 } from "@chakra-ui/react";
 import { BiExport } from "react-icons/bi";
 import { FaRegComment, FaRetweet, FaRegHeart } from "react-icons/fa";
@@ -16,6 +17,7 @@ import { IoIosStats } from "react-icons/io";
 import { Tweet, addLike } from "../services/addTweet";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
+import { Link } from "react-router-dom";
 
 const TweetCard = ({ id, content, name, username, likes }: Tweet) => {
   const [user] = useAuthState(auth);
@@ -33,9 +35,17 @@ const TweetCard = ({ id, content, name, username, likes }: Tweet) => {
       </GridItem>
       <GridItem colSpan={6} p={2}>
         <HStack>
-          <Box fontWeight="semibold" as="h5" lineHeight="tight" noOfLines={1}>
-            {name}
-          </Box>
+          <Link to={`/profile/${username}`}>
+            <Box
+              fontWeight="semibold"
+              as="h5"
+              lineHeight="tight"
+              noOfLines={1}
+              _hover={{ textDecoration: "underline" }}
+            >
+              {name}
+            </Box>
+          </Link>
           <Box
             color="gray.500"
             fontWeight="semibold"
