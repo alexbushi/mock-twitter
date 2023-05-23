@@ -1,10 +1,10 @@
 import { Heading, Spacer, Spinner, Tab, TabList, Tabs } from "@chakra-ui/react";
 import CreateTweet from "./CreateTweet";
 import TweetCard from "./TweetCard";
-import { Tweet, useGetAllTweets } from "../services/addTweet";
+import { Tweet, useGetTweetsByIds } from "../services/addTweet";
 
 const MainList = () => {
-  const { isLoading, tweets } = useGetAllTweets();
+  const { isLoading, tweets } = useGetTweetsByIds();
 
   if (isLoading) return <Spinner />;
 

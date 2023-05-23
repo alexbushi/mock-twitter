@@ -9,7 +9,6 @@ import {
   IconButton,
   Spacer,
   Text,
-  textDecoration,
 } from "@chakra-ui/react";
 import { BiExport } from "react-icons/bi";
 import { FaRegComment, FaRetweet, FaRegHeart } from "react-icons/fa";
