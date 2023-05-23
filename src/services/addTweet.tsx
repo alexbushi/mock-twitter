@@ -31,7 +31,7 @@ export interface Tweet {
   likes: string[];
 }
 
-interface User {
+export interface User {
   uid: string;
   name: string;
   username: string;
@@ -145,23 +145,31 @@ export const useGetUserDataByUsername = (username: string) => {
   const [userData, setUserData] = useState<User[]>([]);
 
   useEffect(() => {
+    setUserData([]);
     const getUserDataByUsername = async () => {
-      try {
-        const q = query(
-          collection(db, "users"),
-          orderBy("username"),
-          startAt(username),
-          endAt(username + "\uf8ff")
-        );
+      if (username) {
+        console.log(username);
 
-        const querySnapshot = await getDocs(q);
+        try {
+          const q = query(
+            collection(db, "users"),
+            orderBy("username"),
+            startAt(username),
+            endAt(username + "\uf8ff")
+          );
 
-        querySnapshot.forEach((doc) => {
-          console.log(doc.data());
-          setUserData((prevUserData) => [...prevUserData, doc.data() as User]);
-        });
-      } catch (error) {
-        console.log(error);
+          const querySnapshot = await getDocs(q);
+
+          querySnapshot.forEach((doc) => {
+            console.log("match", doc.data());
+            setUserData((prevUserData) => [
+              ...prevUserData,
+              doc.data() as User,
+            ]);
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
     };
 
@@ -170,25 +178,6 @@ export const useGetUserDataByUsername = (username: string) => {
 
   return { userData };
 };
-
-// export const getUserDataByUsername = async (username: string) => {
-//   let userData: User[] = [];
-
-//   try {
-//     const q = query(collection(db, "users"), where("username", "==", username));
-
-//     const querySnapshot = await getDocs(q);
-
-//     querySnapshot.forEach((doc) => {
-//       console.log(doc.id, " => ", doc.data());
-//       userData.push(doc.data() as User);
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-
-//   return userData;
-// };
 
 export const useGetTweetsByIds = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
