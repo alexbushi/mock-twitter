@@ -1,6 +1,10 @@
 import { Box, Button, Heading, Spinner, Stack, Text } from "@chakra-ui/react";
 import { logout } from "../firebase";
-import { Tweet, useGetTweetsByUsername } from "../services/addTweet";
+import {
+  Tweet,
+  addFollowerFollowing,
+  useGetTweetsByUsername,
+} from "../services/addTweet";
 import TweetCard from "../components/TweetCard";
 import { useParams } from "react-router-dom";
 
@@ -14,6 +18,20 @@ const ProfilePage = () => {
         <Stack spacing={4}>
           <Heading fontSize={"xl"}>Profile</Heading>
           <Text>@{username}</Text>
+          <Box
+            as="button"
+            bg="black"
+            borderRadius="full"
+            w="90px"
+            h="40px"
+            textColor="white"
+            fontWeight="bold"
+            onClick={() => {
+              addFollowerFollowing(username);
+            }}
+          >
+            Follow
+          </Box>
           <Button size="sm" w="90px" onClick={() => logout()}>
             Logout
           </Button>

@@ -75,7 +75,9 @@ export const addLike = async (tweetId: string) => {
   await updateDoc(tweetRef, { likes: arrayUnion(user.uid) });
 };
 
-export const addFollowerFollowing = async (newFollowingId: string) => {
+export const addFollowerFollowing = async (
+  newFollowingUsername: string = ""
+) => {
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -87,13 +89,18 @@ export const addFollowerFollowing = async (newFollowingId: string) => {
 
   if (newFollowingSnapshot.empty) return;
 
-  const newFollowerQuery = query(usersRef, where("uid", "==", newFollowingId));
+  const newFollowerQuery = query(
+    usersRef,
+    where("username", "==", newFollowingUsername)
+  );
   const newFollowerSnapshot = await getDocs(newFollowerQuery);
 
   if (newFollowerSnapshot.empty) return;
 
   const userRef = doc(usersRef, newFollowingSnapshot.docs[0].id);
-  await updateDoc(userRef, { following: arrayUnion(newFollowingId) });
+  await updateDoc(userRef, {
+    following: arrayUnion(newFollowerSnapshot.docs[0].data().uid),
+  });
 
   const newFollowerRef = doc(usersRef, newFollowerSnapshot.docs[0].id);
   await updateDoc(newFollowerRef, { followers: arrayUnion(user.uid) });
@@ -138,7 +145,7 @@ export const useGetTweetsByIds = () => {
   const { userData } = useGetUserData();
 
   useEffect(() => {
-    if (userData?.uid) {
+    if (userData?.following && userData?.following.length > 0) {
       setIsLoading(true);
 
       const unsubscribe = onSnapshot(
