@@ -4,11 +4,20 @@ import CurrentEvent from "./CurrentEvent";
 import currentEvents from "../data/currentEvents";
 import profiles from "../data/profiles";
 import FollowSuggestion from "./FollowSuggestion";
+import { useGetUserDataByUsername } from "../services/addTweet";
+import { useState } from "react";
 
 const SearchList = () => {
+  const [username, setUsername] = useState("");
+  const { userData } = useGetUserDataByUsername(username);
+
   return (
     <>
-      <SearchInput onSearch={() => {}} />
+      <SearchInput
+        onSearch={(username) => {
+          setUsername(username);
+        }}
+      />
       <Box bg={"gray.100"} marginTop={5} borderRadius={8}>
         <Heading fontSize={"xl"} p={5}>
           What's happening

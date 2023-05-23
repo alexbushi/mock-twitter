@@ -15,6 +15,10 @@ const SearchInput = ({ onSearch }: Props) => {
         event.preventDefault();
         if (ref.current) onSearch(ref.current.value);
       }}
+      onChange={(event) => {
+        event.preventDefault();
+        if (ref.current) onSearch(ref.current.value);
+      }}
     >
       <InputGroup>
         <InputLeftElement children={<BsSearch />}></InputLeftElement>
