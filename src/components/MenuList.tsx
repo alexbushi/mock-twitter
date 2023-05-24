@@ -6,7 +6,7 @@ import { GrNotification } from "react-icons/gr";
 import { HiOutlineMail } from "react-icons/hi";
 import { ReactElement } from "react";
 import { Link } from "react-router-dom";
-import { useGetUserData } from "../services/tweets";
+import { useGetUserDataByUid } from "../services/users";
 
 const MenuList = () => {
   const iconMap: { [key: string]: ReactElement } = {
@@ -16,7 +16,7 @@ const MenuList = () => {
     Bookmarks: <BiBookmark size={23} />,
   };
 
-  const { isLoading, userData } = useGetUserData();
+  const { isLoading, userData } = useGetUserDataByUid();
 
   if (isLoading) return <Spinner />;
 
@@ -64,7 +64,7 @@ const MenuList = () => {
             size="lg"
             borderRadius="25px"
           >
-            {userData?.username}
+            Profile
           </Button>
         </ListItem>
       </Link>

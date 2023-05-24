@@ -16,7 +16,7 @@ import {
 import { db } from "./authentication";
 import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { useGetUserData } from "./users";
+import { useGetUserDataByUid } from "./users";
 
 export interface Tweet {
   id?: string;
@@ -67,7 +67,7 @@ export const addLike = async (tweetId: string) => {
 export const useGetTweetsByIds = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [tweets, setTweets] = useState<Tweet[]>([]);
-  const { userData } = useGetUserData();
+  const { userData } = useGetUserDataByUid();
 
   useEffect(() => {
     if (userData?.following && userData?.following.length > 0) {
@@ -134,4 +134,3 @@ export const useGetTweetsByUsername = (username: string = "") => {
 
   return { isLoading, tweets };
 };
-export { useGetUserData };

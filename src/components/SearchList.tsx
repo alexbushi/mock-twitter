@@ -5,16 +5,15 @@ import currentEvents from "../data/currentEvents";
 import profiles from "../data/profiles";
 import FollowSuggestion from "./FollowSuggestion";
 import { User } from "../services/users";
-import { useGetUserDataByUsername } from "../services/users";
+import { useSearchUserDataByUsername } from "../services/users";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const SearchList = () => {
   const [username, setUsername] = useState("");
-  const { userData } = useGetUserDataByUsername(username);
+  const { userData } = useSearchUserDataByUsername(username);
 
   const renderUserProfileCards = () => {
-    console.log("userData is", userData);
     if (userData.length === 0) {
       return null;
     }

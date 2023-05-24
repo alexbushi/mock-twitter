@@ -1,13 +1,25 @@
-import { Box, Button, Heading, Spinner, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  Heading,
+  Spinner,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { logout } from "../services/authentication";
 import { Tweet, useGetTweetsByUsername } from "../services/tweets";
 import TweetCard from "../components/TweetCard";
 import { useParams } from "react-router-dom";
-import { addFollowerFollowing } from "../services/users";
+import {
+  addFollowerFollowing,
+  useGetUserDataByUsername,
+} from "../services/users";
 
 const ProfilePage = () => {
   const { username } = useParams();
   const { isLoading, tweets } = useGetTweetsByUsername(username);
+  const { userData } = useGetUserDataByUsername(username || "");
 
   return (
     <>
@@ -29,6 +41,21 @@ const ProfilePage = () => {
           >
             Follow
           </Box>
+          <HStack>
+            <Text mr={3}>
+              {" "}
+              <span style={{ fontWeight: "bold" }}>
+                {userData?.following?.length}{" "}
+              </span>
+              Following
+            </Text>
+            <Text>
+              <span style={{ fontWeight: "bold" }}>
+                {userData?.followers?.length}{" "}
+              </span>
+              Followers
+            </Text>
+          </HStack>
           <Button size="sm" w="90px" onClick={() => logout()}>
             Logout
           </Button>

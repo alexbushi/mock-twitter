@@ -25,48 +25,57 @@ export interface User {
   following: string[];
 }
 
-export const useGetUserData = () => {
+interface UserQueryOptions {
+  field: string;
+  value: string;
+}
+
+const useGetUserData = (queryOptions: UserQueryOptions) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userData, setUserData] = useState<User>({} as User);
-  const [user] = useAuthState(auth);
 
   useEffect(() => {
     const getUserData = async () => {
-      if (user) {
-        setIsLoading(true);
-        try {
-          const q = query(
-            collection(db, "users"),
-            where("uid", "in", [user.uid])
-          );
+      setIsLoading(true);
+      try {
+        const q = query(
+          collection(db, "users"),
+          where(queryOptions.field, "in", [queryOptions.value])
+        );
 
-          const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(q);
 
-          if (!querySnapshot.empty) {
-            setUserData(querySnapshot.docs[0]?.data() as User);
-          }
-        } catch (error) {
-          console.log(error);
+        if (!querySnapshot.empty) {
+          setUserData(querySnapshot.docs[0]?.data() as User);
         }
-        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
       }
+      setIsLoading(false);
     };
 
     getUserData();
-  }, [user]);
+  }, [queryOptions.field, queryOptions.value]);
 
   return { isLoading, userData };
 };
 
 export const useGetUserDataByUsername = (username: string) => {
+  return useGetUserData({ field: "username", value: username });
+};
+
+export const useGetUserDataByUid = () => {
+  const [user] = useAuthState(auth);
+  return useGetUserData({ field: "uid", value: user?.uid || "" });
+};
+
+export const useSearchUserDataByUsername = (username: string) => {
   const [userData, setUserData] = useState<User[]>([]);
 
   useEffect(() => {
     setUserData([]);
     const getUserDataByUsername = async () => {
       if (username) {
-        console.log(username);
-
         try {
           const q = query(
             collection(db, "users"),
@@ -78,7 +87,6 @@ export const useGetUserDataByUsername = (username: string) => {
           const querySnapshot = await getDocs(q);
 
           querySnapshot.forEach((doc) => {
-            console.log("match", doc.data());
             setUserData((prevUserData) => [
               ...prevUserData,
               doc.data() as User,
