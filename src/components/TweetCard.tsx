@@ -13,9 +13,9 @@ import {
 import { BiExport } from "react-icons/bi";
 import { FaRegComment, FaRetweet, FaRegHeart } from "react-icons/fa";
 import { IoIosStats } from "react-icons/io";
-import { Tweet, addLike } from "../services/addTweet";
+import { Tweet, addLike } from "../services/tweets";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase";
+import { auth } from "../services/authentication";
 import { Link } from "react-router-dom";
 
 const TweetCard = ({ id, content, name, username, likes }: Tweet) => {

@@ -9,8 +9,11 @@ import {
   Text,
   Spinner,
 } from "@chakra-ui/react";
-import { logInWithEmailAndPassword, signInWithGoogle } from "../firebase";
-import { auth } from "../firebase";
+import {
+  logInWithEmailAndPassword,
+  signInWithGoogle,
+} from "../services/authentication";
+import { auth } from "../services/authentication";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 

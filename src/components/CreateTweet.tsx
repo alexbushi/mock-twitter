@@ -17,7 +17,7 @@ import {
 import { BsListTask, BsEmojiSmile } from "react-icons/bs";
 import { BiMap } from "react-icons/bi";
 import { useState } from "react";
-import { addTweet } from "../services/addTweet";
+import { addTweet } from "../services/tweets";
 
 const CreateTweet = () => {
   const [value, setValue] = useState("");

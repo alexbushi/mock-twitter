@@ -6,7 +6,7 @@ import { GrNotification } from "react-icons/gr";
 import { HiOutlineMail } from "react-icons/hi";
 import { ReactElement } from "react";
 import { Link } from "react-router-dom";
-import { useGetUserData } from "../services/addTweet";
+import { useGetUserData } from "../services/tweets";
 
 const MenuList = () => {
   const iconMap: { [key: string]: ReactElement } = {

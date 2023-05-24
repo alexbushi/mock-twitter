@@ -4,7 +4,8 @@ import CurrentEvent from "./CurrentEvent";
 import currentEvents from "../data/currentEvents";
 import profiles from "../data/profiles";
 import FollowSuggestion from "./FollowSuggestion";
-import { User, useGetUserDataByUsername } from "../services/addTweet";
+import { User } from "../services/users";
+import { useGetUserDataByUsername } from "../services/users";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 

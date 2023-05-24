@@ -1,12 +1,9 @@
 import { Box, Button, Heading, Spinner, Stack, Text } from "@chakra-ui/react";
-import { logout } from "../firebase";
-import {
-  Tweet,
-  addFollowerFollowing,
-  useGetTweetsByUsername,
-} from "../services/addTweet";
+import { logout } from "../services/authentication";
+import { Tweet, useGetTweetsByUsername } from "../services/tweets";
 import TweetCard from "../components/TweetCard";
 import { useParams } from "react-router-dom";
+import { addFollowerFollowing } from "../services/users";
 
 const ProfilePage = () => {
   const { username } = useParams();

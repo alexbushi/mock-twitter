@@ -9,7 +9,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, registerWithEmailAndPassword } from "../firebase";
+import { auth, registerWithEmailAndPassword } from "../services/authentication";
 import { useNavigate } from "react-router-dom";
 
 const RegistrationPage = () => {

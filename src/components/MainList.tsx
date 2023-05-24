@@ -1,7 +1,7 @@
 import { Heading, Spacer, Spinner, Tab, TabList, Tabs } from "@chakra-ui/react";
 import CreateTweet from "./CreateTweet";
 import TweetCard from "./TweetCard";
-import { Tweet, useGetTweetsByIds } from "../services/addTweet";
+import { Tweet, useGetTweetsByIds } from "../services/tweets";
 
 const MainList = () => {
   const { isLoading, tweets } = useGetTweetsByIds();
