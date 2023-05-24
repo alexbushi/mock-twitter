@@ -10,7 +10,7 @@ import {
 import { logout } from "../services/authentication";
 import { Tweet, useGetTweetsByUsername } from "../services/tweets";
 import TweetCard from "../components/TweetCard";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   addFollowerFollowing,
   useGetUserDataByUsername,
@@ -42,19 +42,23 @@ const ProfilePage = () => {
             Follow
           </Box>
           <HStack>
-            <Text mr={3}>
-              {" "}
-              <span style={{ fontWeight: "bold" }}>
-                {userData?.following?.length}{" "}
-              </span>
-              Following
-            </Text>
-            <Text>
-              <span style={{ fontWeight: "bold" }}>
-                {userData?.followers?.length}{" "}
-              </span>
-              Followers
-            </Text>
+            <Link to={`/${username}/following`}>
+              <Text mr={3} _hover={{ textDecoration: "underline" }}>
+                {" "}
+                <span style={{ fontWeight: "bold" }}>
+                  {userData?.following?.length}{" "}
+                </span>
+                Following
+              </Text>
+            </Link>
+            <Link to={`/${username}/followers`}>
+              <Text _hover={{ textDecoration: "underline" }}>
+                <span style={{ fontWeight: "bold" }}>
+                  {userData?.followers?.length}{" "}
+                </span>
+                Followers
+              </Text>
+            </Link>
           </HStack>
           <Button size="sm" w="90px" onClick={() => logout()}>
             Logout

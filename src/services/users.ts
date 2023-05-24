@@ -2,6 +2,7 @@ import { getAuth } from "firebase/auth";
 import {
   arrayUnion,
   collection,
+  collectionGroup,
   doc,
   endAt,
   getDocs,
@@ -133,4 +134,40 @@ export const addFollowerFollowing = async (
 
   const newFollowerRef = doc(usersRef, newFollowerSnapshot.docs[0].id);
   await updateDoc(newFollowerRef, { followers: arrayUnion(user.uid) });
+};
+
+export const useGetFollowerFollowing = (username: string) => {
+  const [users, setUsers] = useState<User[]>([]);
+  const { userData } = useGetUserDataByUsername(username);
+
+  useEffect(() => {
+    const getUserDataByUsername = async () => {
+      if (
+        username &&
+        userData &&
+        userData.following &&
+        userData.following.length > 0
+      ) {
+        try {
+          const q = query(
+            collectionGroup(db, "users"),
+            where("uid", "in", userData.following)
+          );
+
+          const querySnapshot = await getDocs(q);
+
+          querySnapshot.forEach((doc) => {
+            setUsers((prevUsers) => [...prevUsers, doc.data() as User]);
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    getUserDataByUsername();
+  }, [username, userData]);
+
+  console.log(users);
+  return { users };
 };

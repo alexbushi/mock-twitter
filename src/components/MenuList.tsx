@@ -64,7 +64,7 @@ const MenuList = () => {
             size="lg"
             borderRadius="25px"
           >
-            Profile
+            Profile {userData?.uid}
           </Button>
         </ListItem>
       </Link>
