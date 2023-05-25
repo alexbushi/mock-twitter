@@ -2,6 +2,7 @@
   "name": "mock-twitter",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/home",
   "dependencies": {
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
