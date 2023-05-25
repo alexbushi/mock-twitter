@@ -6,6 +6,7 @@ import {
   doc,
   endAt,
   getDocs,
+  onSnapshot,
   orderBy,
   query,
   startAt,
@@ -32,33 +33,25 @@ interface UserQueryOptions {
 }
 
 const useGetUserData = (queryOptions: UserQueryOptions) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userData, setUserData] = useState<User>({} as User);
 
   useEffect(() => {
-    const getUserData = async () => {
-      setIsLoading(true);
-      try {
-        const q = query(
-          collection(db, "users"),
-          where(queryOptions.field, "in", [queryOptions.value])
-        );
-
-        const querySnapshot = await getDocs(q);
-
+    const unsubscribe = onSnapshot(
+      query(
+        collection(db, "users"),
+        where(queryOptions.field, "in", [queryOptions.value])
+      ),
+      (querySnapshot) => {
         if (!querySnapshot.empty) {
           setUserData(querySnapshot.docs[0]?.data() as User);
         }
-      } catch (error) {
-        console.log(error);
       }
-      setIsLoading(false);
-    };
+    );
 
-    getUserData();
+    return () => unsubscribe();
   }, [queryOptions.field, queryOptions.value]);
 
-  return { isLoading, userData };
+  return { userData };
 };
 
 export const useGetUserDataByUsername = (username: string) => {
@@ -169,7 +162,6 @@ export const useGetFollowingFollower = (
     fetchData();
   }, [username, userData, type]);
 
-  console.log(users);
   return { isLoading, users };
 };
 

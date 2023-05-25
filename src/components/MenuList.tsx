@@ -1,4 +1,4 @@
-import { Button, List, ListItem, Spinner } from "@chakra-ui/react";
+import { Button, List, ListItem } from "@chakra-ui/react";
 import { FaHome, FaHashtag } from "react-icons/fa";
 import { BsPerson, BsTwitter } from "react-icons/bs";
 import { BiBookmark } from "react-icons/bi";
@@ -16,9 +16,7 @@ const MenuList = () => {
     Bookmarks: <BiBookmark size={23} />,
   };
 
-  const { isLoading, userData } = useGetUserDataByUid();
-
-  if (isLoading) return <Spinner />;
+  const { userData } = useGetUserDataByUid();
 
   return (
     <List>
@@ -64,7 +62,7 @@ const MenuList = () => {
             size="lg"
             borderRadius="25px"
           >
-            Profile {userData?.uid}
+            Profile
           </Button>
         </ListItem>
       </Link>
