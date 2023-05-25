@@ -1,10 +1,20 @@
-import { useParams } from "react-router-dom";
-import { useGetFollowerFollowing } from "../services/users";
+import { Alert, AlertIcon } from "@chakra-ui/react";
+import { User } from "../services/users";
 import UserCard from "./UserCard";
 
-const UserList = () => {
-  const { username } = useParams();
-  const { users } = useGetFollowerFollowing(username || "");
+interface Props {
+  users: User[];
+}
+
+const UserList = ({ users }: Props) => {
+  if (users.length === 0)
+    return (
+      <Alert status="warning">
+        <AlertIcon />
+        No users to show
+      </Alert>
+    );
+
   return (
     <>
       {users.map((user) => (

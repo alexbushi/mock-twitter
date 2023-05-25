@@ -7,7 +7,8 @@ import ProfilePage from "./pages/ProfilePage";
 import MainList from "./components/MainList";
 import ErrorPage from "./pages/ErrorPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
-import UserList from "./components/UserList";
+import FollowingList from "./components/FollowingList";
+import FollowerList from "./components/FollowerList";
 
 const router = createBrowserRouter([
   {
@@ -20,8 +21,8 @@ const router = createBrowserRouter([
         children: [
           { path: "home", element: <MainList /> },
           { path: "profile/:username", element: <ProfilePage /> },
-          { path: ":username/following", element: <UserList /> },
-          { path: ":username/followers", element: <UserList /> },
+          { path: ":username/following", element: <FollowingList /> },
+          { path: ":username/followers", element: <FollowerList /> },
         ],
       },
     ],

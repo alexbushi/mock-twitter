@@ -136,22 +136,22 @@ export const addFollowerFollowing = async (
   await updateDoc(newFollowerRef, { followers: arrayUnion(user.uid) });
 };
 
-export const useGetFollowerFollowing = (username: string) => {
+export const useGetFollowingFollower = (
+  username: string,
+  type: "following" | "followers"
+) => {
   const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { userData } = useGetUserDataByUsername(username);
 
   useEffect(() => {
-    const getUserDataByUsername = async () => {
-      if (
-        username &&
-        userData &&
-        userData.following &&
-        userData.following.length > 0
-      ) {
+    const fetchData = async () => {
+      if (username && userData && userData[type] && userData[type].length > 0) {
+        setIsLoading(true);
         try {
           const q = query(
             collectionGroup(db, "users"),
-            where("uid", "in", userData.following)
+            where("uid", "in", userData[type])
           );
 
           const querySnapshot = await getDocs(q);
@@ -162,12 +162,21 @@ export const useGetFollowerFollowing = (username: string) => {
         } catch (error) {
           console.log(error);
         }
+        setIsLoading(false);
       }
     };
 
-    getUserDataByUsername();
-  }, [username, userData]);
+    fetchData();
+  }, [username, userData, type]);
 
   console.log(users);
-  return { users };
+  return { isLoading, users };
+};
+
+export const useGetFollowing = (username: string) => {
+  return useGetFollowingFollower(username, "following");
+};
+
+export const useGetFollowers = (username: string) => {
+  return useGetFollowingFollower(username, "followers");
 };
